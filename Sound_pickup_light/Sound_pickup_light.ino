@@ -10,7 +10,10 @@
  * Case idea: 1. A serial of Capsules with different sound level ranges
  *            2. A round case
  *            3. Magnets or clips
- *         
+ *            
+ * Parameters： 1. Change the min/max Sound value to fit in different environments.
+ *              2. Light's color can change.
+ *              3. Start light pattern can change.
  */
 
 #include <WS2812.h>
