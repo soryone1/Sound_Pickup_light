@@ -1,3 +1,18 @@
+/*
+ * Sound Pick-up Light 
+ * 
+ * Parts: 1.Attiny 85 internal 8MHz
+ *        2. Sound Sensor OCROBOT
+ *        3. WS2812B RGB LED
+ *        4. CR2032 LIthium Coin Battery *2
+ *        5. Slide switch
+ * 
+ * Case idea: 1. A serial of Capsules with different sound level ranges
+ *            2. A round case
+ *            3. Magnets or clips
+ *         
+ */
+
 #include <WS2812.h>
 
 const int lightPin = 1;
