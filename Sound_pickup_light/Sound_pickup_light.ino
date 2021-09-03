@@ -1,20 +1,20 @@
 /*
- * Sound Pick-up Light 
- * 
- * Parts: 1.Attiny 85 internal 8MHz
- *        2. Sound Sensor OCROBOT
- *        3. WS2812B RGB LED
- *        4. CR2032 LIthium Coin Battery *2
- *        5. Slide switch
- * 
- * Case idea: 1. A serial of Capsules with different sound level ranges
- *            2. A round case
- *            3. Magnets or clips
- *            
- * Parameters： 1. Change the min/max Sound value to fit in different environments.
- *              2. Light's color can change.
- *              3. Start light pattern can change.
- */
+   Sound Pick-up Light
+
+   Parts: 1.Attiny 85 internal 8MHz
+          2. Sound Sensor OCROBOT
+          3. WS2812B RGB LED
+          4. CR2032 LIthium Coin Battery *2
+          5. Slide switch
+
+   Case idea: 1. A serial of Capsules with different sound level ranges
+              2. A round case
+              3. Magnets or clips
+
+   Parameters： 1. Change the min/max Sound value to fit in different environments.
+                2. Light's color can change.
+                3. Start light pattern can change.
+*/
 
 #include <WS2812.h>
 
@@ -26,10 +26,13 @@ unsigned int maxIntensity = 100;
 const int sensorPin = A2;
 unsigned long preTime = 0;
 unsigned int soundVal;
-const int sampleWindow = 40; // Sample window width in mS (50 mS = 20Hz)
+const int sampleWindow = 40;    // Sample window width in mS (40 mS = 25Hz)
 unsigned int sample;
 unsigned int minSound = 50;
 unsigned int maxSound = 500;
+
+const int groundPin_1 = A1;     // set the rest 2 attiny pins to GND for better wiring
+const int groundPin_2 = A3;
 
 WS2812 LED(NUMPIXELS);
 cRGB value;
@@ -37,6 +40,10 @@ cRGB value;
 void setup() {
   LED.setOutput(lightPin);
   lightStart();
+  pinMode(groundPin_1, OUTPUT);
+  digitalWrite(groundPin_1, LOW);
+  pinMode(groundPin_2, OUTPUT);
+  digitalWrite(groundPin_2, LOW);
 }
 
 void loop() {
@@ -58,6 +65,7 @@ void ligtOutput() {
 }
 
 void lightStart() {
+  delay(700);
   value.r = 255; value.g = 0; value.b = 0;
   LED.set_crgb_at(0, value);
   LED.sync();
@@ -95,6 +103,6 @@ void SoundLevel() {
     }
   }
   peakToPeak = signalMax - signalMin;
-  double volts = (peakToPeak * 5.0) / 1024;
+  double volts = (peakToPeak * 6.0) / 1024;
   soundVal = constrain(volts * 100, minSound, maxSound);
 }
